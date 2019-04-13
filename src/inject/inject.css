@@ -1,0 +1,15 @@
+#main-menu > ul {
+    width: calc(100% - 30px) !important;
+}
+
+.branch {
+    margin-bottom: 10px;
+}
+
+.branch-name {
+    border: none;
+    outline: none;
+    font-weight: bold;
+    width: calc(100% - 235px);
+    background-color: transparent !important;
+}
