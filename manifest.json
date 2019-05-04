@@ -15,9 +15,15 @@
     "default_popup": "src/page_action/page_action.html"
   },
   "permissions": [
+    "storage",
+    "declarativeContent",
     "clipboardWrite",
     "https://redmine.noveogroup.com/*"
   ],
+  "background": {
+    "scripts": ["src/background/background.js"],
+    "persistent": false
+  },
   "content_scripts": [
     {
       "matches": [

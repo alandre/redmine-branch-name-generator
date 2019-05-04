@@ -1,0 +1,117 @@
+:root {
+    --input-background: rgba(57, 63, 84, 0.8);
+    --input-text-inactive: #7881A1;
+    --input-text-active: #BFD2FF;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-image: radial-gradient(circle at 0% 0%, #373b52, #252736 51%, #1d1e26);
+}
+
+h1 {
+    text-align: center;
+    font-size: 2.4rem;
+    font-weight: normal;
+    margin-bottom: 1rem;
+    color: #f5f6ff;
+}
+
+h2 {
+    text-align: left;
+    font-size: 1.6rem;
+    font-weight: normal;
+    margin-bottom: 1rem;
+    color: #f5f6ff;
+}
+
+ul {
+    color: #f5f6ff;
+}
+li {
+    padding-left: 1rem;
+    font-size: 1.2rem;
+    padding-bottom: 5px;
+}
+
+li > b {
+    color: var(--input-text-active);
+    font-family: 'Cutive Mono', monospace;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px;
+    margin: 1rem auto;
+}
+
+@keyframes gradient {
+    0%{background-position:0 0}
+    100%{background-position:100% 0}
+}
+
+.webflow-style-input {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    border-radius: 2px;
+    padding: 1.4rem 2rem 1.6rem;
+    background: var(--input-background);
+}
+
+.webflow-style-input:after {
+    content: "";
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 999;
+    height: 2px;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    background-position: 0% 0%;
+    background: linear-gradient(to right, #B294FF, #57E6E6, #FEFFB8, #57E6E6, #B294FF, #57E6E6);
+    background-size: 500% auto;
+    animation: gradient 3s linear infinite;
+}
+
+input {
+    font-family: 'Cutive Mono', monospace;
+}
+
+.webflow-style-input input {
+    flex-grow: 1;
+    color: var(--input-text-active);
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+    vertical-align: middle;
+}
+
+.webflow-style-input input::-webkit-input-placeholder {
+    color: var(--input-text-inactive);
+}
+
+.webflow-style-input button {
+    color:  var(--input-text-inactive);
+    font-size: 2.4rem;
+    line-height: 2.4rem;
+    vertical-align: middle;
+    transition: color .25s;
+}
+
+button:hover {
+    color: var(--input-text-active);
+}
+
+
+#mainPopup {
+    padding: 10px;
+    height: 300px;
+    width: 350px;
+}

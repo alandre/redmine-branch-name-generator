@@ -96,6 +96,7 @@ const transliterate = (src = '', spaceReplacement = ' ') => {
 const generateBranchNameNode = (branchName = '') => {
   const node = document.createElement('div');
   node.className = 'branch';
+  node.id = 'generatedBranchName';
   node.innerHTML = `Branch name (<a class="branch-copy icon icon-copy" href="#">Copy to clipboard</a>): <input class="branch-name" value="${branchName}" disabled>`;
 
   const copyLink = node.querySelector('a');
@@ -115,10 +116,7 @@ const generateBranchNameNode = (branchName = '') => {
 
 const normalize = str => str.replace(/[^0-9A-Za-zÀ-ÖØ-öø-ÿА-ЯЁа-яё]+/g, ' ').trim();
 
-const injectBranchName = ({
-  trackersMap = {},
-  pattern = '{TYPE}/{ID}-{TASK-NAME}'
-}) => {
+const prepareInjectionData = () => {
   const header = document.querySelector('#content > h2');
   const task = document.querySelector('.subject h3');
 
@@ -126,19 +124,37 @@ const injectBranchName = ({
   const text = normalize(task.textContent);
 
   return translate(text)
-    .then(translation => {
-      const branchName = Object.entries({
-        '{TYPE}': trackersMap[tracker],
-        '{ID}': id,
-        '{TASK_NAME}': transliterate(translation, '_'),
-        '{TASK-NAME}': transliterate(translation, '-'),
-      }).reduce(
-        (str, [searchValue, replaceValue]) => str.replace(searchValue, replaceValue),
-        pattern,
-      );
+    .then(taskName => ({
+      taskName,
+      tracker,
+      header,
+      id
+    }));
+};
 
-      header.after(generateBranchNameNode(branchName));
-    });
+const injectBranchName = ({
+  pattern = '{TYPE}/{ID}-{TASK-NAME}',
+  trackersMap = {},
+  taskName,
+  tracker,
+  header,
+  id,
+}) => {
+  if (document.getElementById('generatedBranchName')) {
+    document.getElementById('generatedBranchName').remove();
+  }
+
+  const branchName = Object.entries({
+    '{TYPE}': trackersMap[tracker],
+    '{ID}': id,
+    '{TASK_NAME}': transliterate(taskName, '_'),
+    '{TASK-NAME}': transliterate(taskName, '-'),
+  }).reduce(
+    (str, [searchValue, replaceValue]) => str.replace(searchValue, replaceValue),
+    pattern,
+  );
+
+  header.after(generateBranchNameNode(branchName));
 };
 
 const _trackersMap = {
@@ -154,8 +170,35 @@ chrome.extension.sendMessage({}, response => {
       clearInterval(readyStateCheckInterval);
 
       if (/^\/issues\/[0-9]+/.test(window.location.pathname)) {
-        injectBranchName({
-          trackersMap: _trackersMap,
+        prepareInjectionData().then(({
+          id,
+          header,
+          tracker,
+          taskName,
+        }) => {
+          chrome.storage.sync.get(['pattern'], ({ pattern }) => {
+            injectBranchName({
+              trackersMap: _trackersMap,
+              taskName,
+              pattern,
+              tracker,
+              header,
+              id,
+            });
+          });
+
+          chrome.storage.onChanged.addListener(({ pattern }) => {
+            if (pattern) {
+              injectBranchName({
+                trackersMap: _trackersMap,
+                taskName,
+                pattern: pattern.newValue,
+                tracker,
+                header,
+                id,
+              });
+            }
+          })
         });
       }
     }
