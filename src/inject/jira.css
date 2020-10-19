@@ -1,0 +1,20 @@
+.copy-ttt-task-name {
+    width: 32px;
+    height: 32px;
+    background-color: rgba(9, 30, 66, 0.04);
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(66, 82, 110);
+    cursor: pointer;
+}
+
+.copy-ttt-task-name:hover {
+    background-color: rgba(9, 30, 66, 0.08);
+}
+
+.copy-ttt-task-name:active:hover {
+    background-color: rgba(179, 212, 256, 0.6);
+    color: rgb(0, 82, 204);
+}

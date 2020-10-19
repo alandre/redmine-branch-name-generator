@@ -1,8 +1,8 @@
 {
-  "name": "Redmine branch name generator",
-  "version": "1.0.1",
+  "name": "Developer assistant",
+  "version": "2.0.0",
   "manifest_version": 2,
-  "description": "Redmine branch name generator",
+  "description": "Redmine branch name and JIRA task generator",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
@@ -11,14 +11,14 @@
   "default_locale": "en",
   "page_action": {
     "default_icon": "icons/favicon.png",
-    "default_title": "Redmine branch name generator",
+    "default_title": "Redmine branch name and JIRA task generator",
     "default_popup": "src/page_action/page_action.html"
   },
   "permissions": [
     "storage",
-    "declarativeContent",
     "clipboardWrite",
-    "https://redmine.noveogroup.com/*"
+    "https://redmine.noveogroup.com/*",
+    "https://wyndcustomers.atlassian.net/*"
   ],
   "background": {
     "scripts": ["src/background/background.js"],
@@ -30,7 +30,7 @@
         "https://redmine.noveogroup.com/*"
       ],
       "css": [
-        "src/inject/inject.css"
+        "src/inject/redmine.css"
       ]
     },
     {
@@ -38,7 +38,23 @@
         "https://redmine.noveogroup.com/*"
       ],
       "js": [
-        "src/inject/inject.js"
+        "src/inject/redmine.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://wyndcustomers.atlassian.net/*"
+      ],
+      "css": [
+        "src/inject/jira.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://wyndcustomers.atlassian.net/*"
+      ],
+      "js": [
+        "src/inject/jira.js"
       ]
     }
   ]
