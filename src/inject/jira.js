@@ -9,7 +9,7 @@ const getButtonLine = () => {
     return {
         buttonLine,
         taskTitle: document.querySelector('[data-test-id="issue.views.issue-base.foundation.summary.heading"]').innerText,
-        taskNumber: document.querySelector('[data-test-id="issue.views.issue-base.foundation.breadcrumbs.breadcrumb-current-issue-container"]').children[1].firstChild.firstChild.firstChild.innerText,
+        taskNumber: new URLSearchParams(window.location.search).get('selectedIssue'),
     };
 }
 
