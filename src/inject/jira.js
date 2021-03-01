@@ -9,7 +9,7 @@ const getButtonLine = () => {
     return {
         buttonLine,
         taskTitle: document.querySelector('[data-test-id="issue.views.issue-base.foundation.summary.heading"]').innerText,
-        taskNumber: new URLSearchParams(window.location.search).get('selectedIssue'),
+        taskNumber: new URLSearchParams(window.location.search).get('selectedIssue') || location.pathname.split('/').pop(),
     };
 }
 
