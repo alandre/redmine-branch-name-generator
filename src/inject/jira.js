@@ -29,7 +29,7 @@ const injectButton = () => {
         input.style.width = '10px';
         div.after(input);
         input.focus();
-        input.value = `Wynd-POS-Product / Development / ${taskNumber} - ${taskTitle.replaceAll('/', '-')}`;
+        input.value = `Wynd - POS Product - ODC / Development / ${taskNumber} - ${taskTitle.replaceAll('/', '-')}`;
         input.select();
         document.execCommand('copy');
         input.remove();
